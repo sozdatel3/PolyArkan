@@ -172,8 +172,6 @@ async def handle_get_stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
-if __name__ == "__main__":
-
 async def main():
     while True:
 
@@ -191,7 +189,7 @@ async def main():
             # Обработка статистики
             application.add_handler(CommandHandler("getStat", handle_get_stat))
             try:
-                application.run_polling(
+                await application.run_polling(
                     timeout=100
                 )  # Увеличиваем время ожидания до 60 секунд
             except Exception as er:
@@ -200,6 +198,7 @@ async def main():
                 continue
         except Exception as e:
             logging.error(f"An error occurred: {e}", exc_info=True)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
