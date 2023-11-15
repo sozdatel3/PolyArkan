@@ -172,19 +172,21 @@ async def handle_get_stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == "__main__":
-    try:
+    while True:
+
         try:
-            application = ApplicationBuilder().token(TOKEN).build()
-        except Exception as er:
-            logging.error(f"APP ERR ={er}")
-            exit(0)
-        # Обработка сообщений с датой рождения
-        application.add_handler(
-            MessageHandler(filters.TEXT & (~filters.COMMAND), handle_birthday)
-        )
-        # Обработка статистики
-        application.add_handler(CommandHandler("getStat", handle_get_stat))
-        while True:
+            try:
+                application = ApplicationBuilder().token(TOKEN).build()
+            except Exception as er:
+                logging.error(f"APP ERR ={er}")
+                # exit(0)
+                continue
+            # Обработка сообщений с датой рождения
+            application.add_handler(
+                MessageHandler(filters.TEXT & (~filters.COMMAND), handle_birthday)
+            )
+            # Обработка статистики
+            application.add_handler(CommandHandler("getStat", handle_get_stat))
             try:
                 application.run_polling(
                     timeout=100
@@ -193,5 +195,5 @@ if __name__ == "__main__":
                 logging.error(f"polling er ={er}")
                 time.sleep(5)
                 continue
-    except Exception as e:
-        logging.error(f"An error occurred: {e}", exc_info=True)
+        except Exception as e:
+            logging.error(f"An error occurred: {e}", exc_info=True)
