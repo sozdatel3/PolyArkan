@@ -218,18 +218,10 @@ async def main():
     # Обработка статистики
     application.add_handler(CommandHandler("getStat", handle_get_stat))
 
-    while True:
-        print("TRY")
-        try:
-            await asyncio.wait_for(application.run_polling(), timeout=60)
-        except asyncio.TimeoutError:
-            pass
-        except Exception as er:
-            logging.error(f"polling er ={er}")
-            time.sleep(5)
-            continue
-        except asyncio.CancelledError:
-            break
+    try:
+        await application.run_polling()
+    except Exception as er:
+        logging.error(f"polling er ={er}")
 
     await application.shutdown()
 
