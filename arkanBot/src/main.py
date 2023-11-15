@@ -173,12 +173,12 @@ async def handle_get_stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def main():
-
+    print("IN MAIN")
     try:
         application = ApplicationBuilder().token(TOKEN).build()
     except Exception as er:
         logging.error(f"APP ERR ={er}")
-        # exit(0)
+
     # Обработка сообщений с датой рождения
     application.add_handler(
         MessageHandler(filters.TEXT & (~filters.COMMAND), handle_birthday)
@@ -186,9 +186,10 @@ async def main():
     # Обработка статистики
     application.add_handler(CommandHandler("getStat", handle_get_stat))
     while True:
+        print("TRY")
         try:
             await application.run_polling(
-                timeout=100
+                timeout=60
             )  # Увеличиваем время ожидания до 60 секунд
         except Exception as er:
             logging.error(f"polling er ={er}")
