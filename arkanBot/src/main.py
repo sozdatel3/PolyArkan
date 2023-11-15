@@ -171,12 +171,15 @@ async def handle_get_stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == "__main__":
-    application = ApplicationBuilder().token(TOKEN).build()
+    try:
+        application = ApplicationBuilder().token(TOKEN).build()
 
-    # Обработка сообщений с датой рождения
-    application.add_handler(
-        MessageHandler(filters.TEXT & (~filters.COMMAND), handle_birthday)
-    )
-    # Обработка статистики
-    application.add_handler(CommandHandler("getStat", handle_get_stat))
-    application.run_polling()
+        # Обработка сообщений с датой рождения
+        application.add_handler(
+            MessageHandler(filters.TEXT & (~filters.COMMAND), handle_birthday)
+        )
+        # Обработка статистики
+        application.add_handler(CommandHandler("getStat", handle_get_stat))
+        application.run_polling()
+    except Exception as e:
+        logging.error(e)
