@@ -8,6 +8,7 @@ from telegram.ext import (
 )
 from glob import glob
 import os
+import time
 from telegram import Update
 import logging
 import dateparser
@@ -183,12 +184,14 @@ if __name__ == "__main__":
         )
         # Обработка статистики
         application.add_handler(CommandHandler("getStat", handle_get_stat))
-        try:
-            application.run_polling(
-                timeout=100
-            )  # Увеличиваем время ожидания до 60 секунд
-        except Exception as er:
-            logging.error(f"polling er ={er}")
-            exit(0)
+        while True:
+            try:
+                application.run_polling(
+                    timeout=100
+                )  # Увеличиваем время ожидания до 60 секунд
+            except Exception as er:
+                logging.error(f"polling er ={er}")
+                time.sleep(5)
+                continue
     except Exception as e:
         logging.error(f"An error occurred: {e}", exc_info=True)
