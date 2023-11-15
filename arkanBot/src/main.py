@@ -13,6 +13,7 @@ from telegram import Update
 import logging
 import dateparser
 import re
+import asyncio
 from dateparser.search.search import DateSearchWithDetection
 from dotenv import load_dotenv
 
@@ -172,6 +173,8 @@ async def handle_get_stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == "__main__":
+
+async def main():
     while True:
 
         try:
@@ -197,3 +200,6 @@ if __name__ == "__main__":
                 continue
         except Exception as e:
             logging.error(f"An error occurred: {e}", exc_info=True)
+
+if __name__ == "__main__":
+    asyncio.run(main())
