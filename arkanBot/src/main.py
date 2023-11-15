@@ -180,7 +180,7 @@ if __name__ == "__main__":
         )
         # Обработка статистики
         application.add_handler(CommandHandler("getStat", handle_get_stat))
-        application.run_polling(timeout=60)  # Увеличиваем время ожидания до 60 секунд
+        application.run_polling(timeout=100)  # Увеличиваем время ожидания до 60 секунд
 
     except Exception as e:
         logging.error(f"An error occurred: {e}", exc_info=True)
