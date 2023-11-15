@@ -218,10 +218,15 @@ async def main():
     # Обработка статистики
     application.add_handler(CommandHandler("getStat", handle_get_stat))
 
-    try:
-        await application.run_polling()
-    except Exception as er:
-        logging.error(f"polling er ={er}")
+    while True:
+        try:
+            await application.run_polling(timeout=60)
+        except Exception as er:
+            logging.error(f"polling er ={er}")
+            time.sleep(5)
+            continue
+        except asyncio.CancelledError:
+            break
 
     await application.shutdown()
 
